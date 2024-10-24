@@ -156,12 +156,23 @@ throws_ok { $strSchemaDate->parse('2020-01-01T00:00:00Z') } qr/^Not a date forma
 
 my $strSchemaTime = z->string->time;
 is($strSchemaTime->parse('00:00:00'), '00:00:00', 'string: 00:00:00');
+is($strSchemaTime->parse('00:00:10.102'), '00:00:10.102', 'string: 00:00:10.102');
 is($strSchemaTime->parse('00:00:10.102345'), '00:00:10.102345', 'string: 00:00:10.102345');
 throws_ok { $strSchemaTime->parse('24:00:00') } qr/^Not a valid time/, 'string: 24:00:00';
 throws_ok { $strSchemaTime->parse('00:00:60') } qr/^Not a valid time/, 'string: 00:00:60';
 throws_ok { $strSchemaTime->parse('00:60:00') } qr/^Not a valid time/, 'string: 00:60:00';
 throws_ok { $strSchemaTime->parse('60:00:00') } qr/^Not a valid time/, 'string: 60:00:00';
 throws_ok { $strSchemaTime->parse('00:00:00Z') } qr/^Not a time format/, 'string: 00:00:00Z';
+
+my $strSchemaTimeWithPrecision3 = z->string->time({precision => 3});
+is($strSchemaTimeWithPrecision3->parse('00:00:00'), '00:00:00', 'string: 00:00:00');
+is($strSchemaTimeWithPrecision3->parse('00:00:10.102'), '00:00:10.102', 'string: 00:00:10.102');
+throws_ok { $strSchemaTimeWithPrecision3->parse('00:00:10.102345') } qr/^Not a time format/, 'string: 00:00:10.102345';
+throws_ok { $strSchemaTimeWithPrecision3->parse('24:00:00') } qr/^Not a valid time/, 'string: 24:00:00';
+throws_ok { $strSchemaTimeWithPrecision3->parse('00:00:60') } qr/^Not a valid time/, 'string: 00:00:60';
+throws_ok { $strSchemaTimeWithPrecision3->parse('00:60:00') } qr/^Not a valid time/, 'string: 00:60:00';
+throws_ok { $strSchemaTimeWithPrecision3->parse('60:00:00') } qr/^Not a valid time/, 'string: 60:00:00';
+throws_ok { $strSchemaTimeWithPrecision3->parse('00:00:00Z') } qr/^Not a time format/, 'string: 00:00:00Z';
 
 my $strSchemaDateTime = z->string->datetime({offset => 1, precision => 6});
 is($strSchemaDateTime->parse('2020-01-01T00:00:00'), '2020-01-01T00:00:00', 'string: 2020-01-01T00:00:00');
