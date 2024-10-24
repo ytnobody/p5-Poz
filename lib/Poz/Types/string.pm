@@ -178,15 +178,25 @@ sub endsWith {
 
 # supports ipv4 / ipv6
 sub ip {
-    my ($self) = @_;
+    my ($self, $opts) = @_;
+    $opts = $opts || {};
+    my $version = $opts->{version} || "any";
     push @{$self->{rules}}, sub {
         my ($value) = @_;
-        my @octets = split(/\./, $value);
-        if (scalar(@octets) == 4) {
-            foreach my $octet (@octets) {
-                Carp::croak("Not an IP address") unless $octet =~ /^\d+$/ && $octet >= 0 && $octet <= 255;
+        my $pass = 0;
+        if ($version eq "v4" || $version eq "any") {
+            my @octets = split(/\./, $value);
+            if (scalar(@octets) == 4) {
+                foreach my $octet (@octets) {
+                    Carp::croak("Not an IP address") unless $octet =~ /^\d+$/ && $octet >= 0 && $octet <= 255;
+                }
+                $pass = 1;
             }
-        } else {
+            if ($version eq "v4" && !$pass) {
+                Carp::croak("Not an IP address");
+            }
+        }
+        if (!$pass && ($version eq "v6" || $version eq "any")) {
             Carp::croak("Not an IP address") unless Net::IPv6Addr::is_ipv6($value);
         }
         return;

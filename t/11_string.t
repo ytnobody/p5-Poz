@@ -134,6 +134,18 @@ throws_ok { $strSchemaIP->parse('10.20.30.256') } qr/^Not an IP address/, 'strin
 is($strSchemaIP->parse('2001:0db8:85a3:0000:0000:8a2e:0370:7334'), '2001:0db8:85a3:0000:0000:8a2e:0370:7334', 'string: 2001:0db8:85a3:0000:0000:8a2e:0370:7334');
 throws_ok { $strSchemaIP->parse('2001:0db8:85a3:0000:0000:8a2e:0370:7334:1') } qr/^Not an IP address/, 'string: 2001:0db8:85a3:0000:0000:8a2e:0370:7334:1';
 
+my $strSchemaIPv4 = z->string->ip({version => 'v4'});
+is($strSchemaIPv4->parse('10.20.30.40'), '10.20.30.40', 'string: 10.20.30.40');
+throws_ok { $strSchemaIPv4->parse('10.20.30.256') } qr/^Not an IP address/, 'string: 10.20.30.256';
+throws_ok { $strSchemaIPv4->parse('2001:0db8:85a3:0000:0000:8a2e:0370:7334') } qr/^Not an IP address/, 'string: 2001:0db8:85a3:0000:0000:8a2e:0370:7334';
+throws_ok { $strSchemaIPv4->parse('2001:0db8:85a3:0000:0000:8a2e:0370:7334:1') } qr/^Not an IP address/, 'string: 2001:0db8:85a3:0000:0000:8a2e:0370:7334:1';
+
+my $strSchemaIPv6 = z->string->ip({version => 'v6'});
+throws_ok { $strSchemaIPv6->parse('10.20.30.40') } qr/^Not an IP address/, 'string: 10.20.30.40';
+throws_ok { $strSchemaIPv6->parse('10.20.30.256') } qr/^Not an IP address/, 'string: 10.20.30.256';
+is($strSchemaIPv6->parse('2001:0db8:85a3:0000:0000:8a2e:0370:7334'), '2001:0db8:85a3:0000:0000:8a2e:0370:7334', 'string: 2001:0db8:85a3:0000:0000:8a2e:0370:7334');
+throws_ok { $strSchemaIPv6->parse('2001:0db8:85a3:0000:0000:8a2e:0370:7334:1') } qr/^Not an IP address/, 'string: 2001:0db8:85a3:0000:0000:8a2e:0370:7334:1';
+
 my $strSchemaTrim = z->string->trim;
 is($strSchemaTrim->parse(' foo '), 'foo', 'string: foo');
 is($strSchemaTrim->parse('foo '), 'foo', 'string: foo');
