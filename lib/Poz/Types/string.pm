@@ -9,6 +9,7 @@ use Email::Address ();
 use URI::URL ();
 use Net::IPv6Addr ();
 use Time::Piece ();
+use DateTime::Format::ISO8601 ();
 use DateTime::Format::Duration::ISO8601 ();
 
 sub rule {
@@ -237,6 +238,32 @@ sub time {
         my ($value) = @_;
         Carp::croak("Not a time format") unless $value =~ /^\d{2}:\d{2}:\d{2}(\.[0-9]{1,6})?$/;
         Carp::croak("Not a valid time") unless eval { Time::Piece->strptime($value, "%H:%M:%S") };
+        return;
+    };
+    return $self;
+}
+
+# iso8601 format
+sub datetime {
+    my ($self, $opts) = @_;
+    $opts = $opts || {};
+    my $precision = $opts->{precision} || 6;
+    my $min_precision = $opts->{min_precision} || 1;
+    if ($precision < $min_precision) {
+        $min_precision = $precision;
+    }
+    my $precision_regex = "(\\.[0-9]{$min_precision,$precision})?";
+    my $offset = $opts->{offset} || 0;
+    my $offset_regex = "(Z)?";
+    if ($offset) {
+        $offset_regex = "(Z|[+-][0-9]{4}|[+-][0-9]{2}(:[0-9]{2})?)?";
+    }
+
+    my $format_check = qr/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$precision_regex$offset_regex$/;
+    push @{$self->{rules}}, sub {
+        my ($value) = @_;
+        Carp::croak("Not a datetime format, $value") unless $value =~ $format_check;
+        Carp::croak("Not a valid datetime") unless eval { DateTime::Format::ISO8601->parse_datetime($value) };
         return;
     };
     return $self;
