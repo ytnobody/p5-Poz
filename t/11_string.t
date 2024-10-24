@@ -11,9 +11,17 @@ is($strSchema->parse(''), '', 'string: ""');
 is($strSchema->parse(0), 0, 'number: 0 (however it looks as a string in Perl)');
 is($strSchema->parse(1), 1, 'number: 1 (however it looks as a string in Perl)');
 is($strSchema->parse(-3), -3, 'number: -3 (however it looks as a string in Perl)');
-throws_ok { $strSchema->parse(undef) } qr/^Not a string/, 'undef is not a string';
+throws_ok { $strSchema->parse(undef) } qr/^required/, 'undef is not a string';
 throws_ok { $strSchema->parse({test => "foo"}) } qr/^Not a string/, 'hashref: {test => "foo"}';
 throws_ok { $strSchema->parse([1, 2, 3]) } qr/^Not a string/, 'arrayref: [1, 2, 3]';
+
+my $strSchemaRequiredError = z->string({required_error => 'tuna is required string'});
+is($strSchemaRequiredError->parse('foo'), 'foo', 'string: foo');
+throws_ok { $strSchemaRequiredError->parse(undef) } qr/^tuna is required string/, 'undef is not a string';
+
+my $strSchemaInvalidTypeError = z->string({invalid_type_error => 'tuna is invalid'});
+is($strSchemaInvalidTypeError->parse('foo'), 'foo', 'string: foo');
+throws_ok { $strSchemaInvalidTypeError->parse([1, 2]) } qr/^tuna is invalid/, '[1, 2] is not a string';
 
 my $strSchemaDefault = z->string->default('tuna');
 is($strSchemaDefault->parse('foo'), 'foo', 'string: foo');
@@ -53,7 +61,7 @@ is($strSchemaCoerce->parse(''), '', 'string: ""');
 is($strSchemaCoerce->parse(0), '0', 'number: 0 coerce to "0"');
 is($strSchemaCoerce->parse(1), '1', 'number: 1 coerce to "1"');
 is($strSchemaCoerce->parse(-3), '-3', 'number: -3 coerce to "-3"');
-throws_ok { $strSchemaCoerce->parse(undef) } qr/^Not a string/, 'undef';
+throws_ok { $strSchemaCoerce->parse(undef) } qr/^required/, 'undef';
 
 my $strSchemaMax = z->string->max(3);
 is($strSchemaMax->parse('foo'), 'foo', 'string: foo');

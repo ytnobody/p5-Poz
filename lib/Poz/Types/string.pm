@@ -13,9 +13,19 @@ use DateTime::Format::Strptime ();
 use DateTime::Format::ISO8601 ();
 use DateTime::Format::Duration::ISO8601 ();
 
+sub new {
+    my ($class, $opts) = @_;
+    $opts = $opts || {};
+    $opts->{required_error} //= "required";
+    $opts->{invalid_type_error} //= "Not a string";
+    my $self = $class->SUPER::new($opts);
+    return $self;
+}
+
 sub rule {
-    my ($value) = @_;
-    Carp::croak("Not a string") unless defined $value && !ref $value;
+    my ($self, $value) = @_;
+    Carp::croak($self->{required_error}) unless defined $value;
+    Carp::croak($self->{invalid_type_error}) unless !ref $value;
     return;
 }
 
@@ -27,7 +37,7 @@ sub coerce {
 sub max {
     my ($self, $max) = @_;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         Carp::croak("Too long") if length($value) > $max;
         return;
     };
@@ -37,7 +47,7 @@ sub max {
 sub min {
     my ($self, $min) = @_;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         Carp::croak("Too short") if length($value) < $min;
         return;
     };
@@ -47,7 +57,7 @@ sub min {
 sub length {
     my ($self, $length) = @_;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         Carp::croak("Not the right length") if length($value) != $length;
         return;
     };
@@ -57,7 +67,7 @@ sub length {
 sub email {
     my ($self) = @_;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         my ($addr) = Email::Address->parse($value);
         Carp::croak("Not an email") unless defined $addr;
         return;
@@ -68,7 +78,7 @@ sub email {
 sub url {
     my ($self) = @_;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         my $url = URI::URL->new($value);
         Carp::croak("Not an URL") if !defined $url || !defined $url->scheme;
         return;
@@ -79,7 +89,7 @@ sub url {
 sub emoji {
     my ($self) = @_;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         Carp::croak("Not an emoji") unless $value =~ /\p{Emoji}/;
         return;
     };
@@ -89,7 +99,7 @@ sub emoji {
 sub uuid {
     my ($self) = @_;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         Carp::croak("Not an UUID") unless $value =~ /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
         return;
     };
@@ -99,7 +109,7 @@ sub uuid {
 sub nanoid {
     my ($self) = @_;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         Carp::croak("Not a nanoid") unless $value =~ /^[0-9a-zA-Z_-]{21}$/;
         return;
     };
@@ -109,7 +119,7 @@ sub nanoid {
 sub cuid {
     my ($self) = @_;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         Carp::croak("Not a cuid") unless $value =~ /^c[a-z0-9]{24}$/;
         return;
     };
@@ -119,7 +129,7 @@ sub cuid {
 sub cuid2 {
     my ($self) = @_;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         Carp::croak("Not a cuid2") unless $value =~ /^[a-z0-9]{24,32}$/;
         return;
     };
@@ -129,7 +139,7 @@ sub cuid2 {
 sub ulid {
     my ($self) = @_;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         Carp::croak("Not an ulid") unless $value =~ /^[0-9A-HJKMNP-TV-Z]{26}$/;
         return;
     };
@@ -139,7 +149,7 @@ sub ulid {
 sub regex {
     my ($self, $regex) = @_;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         Carp::croak("Not match regex") unless $value =~ $regex;
         return;
     };
@@ -149,7 +159,7 @@ sub regex {
 sub includes {
     my ($self, $includes) = @_;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         Carp::croak("Not includes $includes") unless index($value, $includes) != -1;
         return;
     };
@@ -159,7 +169,7 @@ sub includes {
 sub startsWith {
     my ($self, $startWith) = @_;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         Carp::croak("Not starts with $startWith") unless index($value, $startWith) == 0;
         return;
     };
@@ -169,7 +179,7 @@ sub startsWith {
 sub endsWith {
     my ($self, $endsWith) = @_;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         Carp::croak("Not ends with $endsWith") unless substr($value, -1 * length($endsWith)) eq $endsWith;
         return;
     };
@@ -182,7 +192,7 @@ sub ip {
     $opts = $opts || {};
     my $version = $opts->{version} || "any";
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         my $pass = 0;
         if ($version eq "v4" || $version eq "any") {
             my @octets = split(/\./, $value);
@@ -207,7 +217,7 @@ sub ip {
 sub trim {
     my ($self) = @_;
     push @{$self->{transform}}, sub { 
-        my ($value) = @_;
+        my ($self, $value) = @_;
         $value =~ s/^\s+|\s+$//g;
         return $value;
     };
@@ -217,7 +227,7 @@ sub trim {
 sub toLowerCase {
     my ($self) = @_;
     push @{$self->{transform}}, sub { 
-        my ($value) = @_;
+        my ($self, $value) = @_;
         return lc($value);
     };
     return $self;
@@ -226,7 +236,7 @@ sub toLowerCase {
 sub toUpperCase {
     my ($self) = @_;
     push @{$self->{transform}}, sub { 
-        my ($value) = @_;
+        my ($self, $value) = @_;
         return uc($value);
     };
     return $self;
@@ -235,7 +245,7 @@ sub toUpperCase {
 sub date {
     my ($self) = @_;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         Carp::croak("Not a date format") unless $value =~ /^\d{4}-\d{2}-\d{2}$/;
         Carp::croak("Not a valid date") unless eval { Time::Piece->strptime($value, "%Y-%m-%d") };
         return;
@@ -250,7 +260,7 @@ sub time {
     my $precision_regex = _build_precision_regex($precision);
     my $format_check = qr/^\d{2}:\d{2}:\d{2}$precision_regex$/;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         my $format = "%H:%M:%S";
         Carp::croak("Not a time format") unless $value =~ $format_check;
         if ($value =~ /\.[0-9]+/) {
@@ -277,7 +287,7 @@ sub datetime {
 
     my $format_check = qr/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$precision_regex$offset_regex$/;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         Carp::croak("Not a datetime format, $value") unless $value =~ $format_check;
         Carp::croak("Not a valid datetime") unless eval { DateTime::Format::ISO8601->parse_datetime($value) };
         return;
@@ -298,7 +308,7 @@ sub _build_precision_regex {
 sub duration {
     my ($self) = @_;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         my $format = DateTime::Format::Duration::ISO8601->new;
         Carp::croak("Not a valid duration") unless eval { $format->parse_duration($value) };
         return;
@@ -309,7 +319,7 @@ sub duration {
 sub base64 {
     my ($self) = @_;
     push @{$self->{rules}}, sub {
-        my ($value) = @_;
+        my ($self, $value) = @_;
         Carp::croak("Not a base64") unless $value =~ /^[A-Za-z0-9+\/]+={0,2}$/;
         return;
     };

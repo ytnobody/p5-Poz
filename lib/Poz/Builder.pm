@@ -18,8 +18,12 @@ sub coerce {
 }
 
 sub string {
-    my ($self) = @_;
-    return Poz::Types::string->new(need_coerce => $self->{need_coerce});
+    my ($self, $opts) = @_;
+    $opts = $opts || {};
+    return Poz::Types::string->new({
+        %{$opts},
+        need_coerce => $self->{need_coerce},
+    });
 }
 
 # sub number {
