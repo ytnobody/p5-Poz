@@ -8,5 +8,6 @@ requires 'DateTime::Format::Duration::ISO8601', '0.008';
 
 on 'test' => sub {
     requires 'Test::More', '0.98';
+    requires 'Test::Exception', '0.43';
 };
 
