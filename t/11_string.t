@@ -112,12 +112,12 @@ is($strSchemaUrlWithMessage->parse('http://example.com'), 'http://example.com', 
 throws_ok { $strSchemaUrlWithMessage->parse('example') } qr/^tuna is not an URL/, 'string: example';
 
 my $strSchemaEmoji = z->string->emoji;
-is($strSchemaEmoji->parse('🍣'), '🍣', 'string: 🍣');
-is($strSchemaEmoji->parse('🍣🍣🍣'), '🍣🍣🍣', 'string: 🍣🍣🍣');
+is($strSchemaEmoji->parse('🍣'), '🍣', 'string: emoji(sushi)');
+is($strSchemaEmoji->parse('🍣🍣🍣'), '🍣🍣🍣', 'string: emoji(sushi)x3');
 throws_ok { $strSchemaEmoji->parse('sushi') } qr/^Not an emoji/, 'string: sushi';
 
 my $strSchemaEmojiWithMessage = z->string->emoji({message => 'tuna wants emoji'});
-is($strSchemaEmojiWithMessage->parse('🍣'), '🍣', 'string: 🍣');
+is($strSchemaEmojiWithMessage->parse('🍣'), '🍣', 'string: emoji(sushi)');
 throws_ok { $strSchemaEmojiWithMessage->parse('sushi') } qr/^tuna wants emoji/, 'string: sushi';
 
 my $strSchemaUUID = z->string->uuid;
