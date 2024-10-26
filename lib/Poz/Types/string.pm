@@ -40,7 +40,7 @@ sub max {
     $opts->{message} //= "Too long";
     push @{$self->{rules}}, sub {
         my ($self, $value) = @_;
-        Carp::croak($opts->{message}) if length($value) > $max;
+        Carp::croak($opts->{message}) if CORE::length($value) > $max;
         return;
     };
     return $self;
@@ -52,7 +52,7 @@ sub min {
     $opts->{message} //= "Too short";
     push @{$self->{rules}}, sub {
         my ($self, $value) = @_;
-        Carp::croak($opts->{message}) if length($value) < $min;
+        Carp::croak($opts->{message}) if CORE::length($value) < $min;
         return;
     };
     return $self;
@@ -64,7 +64,7 @@ sub length {
     $opts->{message} //= "Not the right length";
     push @{$self->{rules}}, sub {
         my ($self, $value) = @_;
-        Carp::croak($opts->{message}) if length($value) != $length;
+        Carp::croak($opts->{message}) if CORE::length($value) != $length;
         return;
     };
     return $self;
@@ -210,7 +210,7 @@ sub endsWith {
     $opts->{message} //= "Not ends with $endsWith";
     push @{$self->{rules}}, sub {
         my ($self, $value) = @_;
-        Carp::croak($opts->{message}) unless substr($value, -1 * length($endsWith)) eq $endsWith;
+        Carp::croak($opts->{message}) unless substr($value, -1 * CORE::length($endsWith)) eq $endsWith;
         return;
     };
     return $self;
