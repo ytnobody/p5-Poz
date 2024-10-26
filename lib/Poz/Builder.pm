@@ -3,6 +3,7 @@ use 5.032;
 use strict;
 use warnings;
 use Poz::Types::string;
+use Poz::Types::number;
 
 sub new {
     my ($class) = @_;
@@ -26,52 +27,13 @@ sub string {
     });
 }
 
-# sub number {
-#     my ($self) = @_;
-#     push @{$self->{rules}}, sub {
-#         my ($value) = @_;
-#         return "Not a number" unless defined $value && $value =~ /^-?\d+\.?\d*$/;
-#         return;
-#     };
-#     return $self;
-# }
-
-# sub date {
-#     my ($self) = @_;
-#     push @{$self->{rules}}, sub {
-#         my ($value) = @_;
-#         return "Not a date" unless defined $value && $value =~ /^\d{4}-\d{2}-\d{2}$/;
-#         return;
-#     };
-#     return $self;
-# }
-
-# sub object {
-#     my ($self, $schema) = @_;
-#     push @{$self->{rules}}, sub {
-#         my ($value) = @_;
-#         return "Not an object" unless defined $value && ref $value eq 'HASH';
-#         for my $key (keys %$schema) {
-#             my $err = $schema->{$key}->validate($value->{$key});
-#             return "$key: $err" if defined $err;
-#         }
-#         return;
-#     };
-#     return $self;
-# }
-
-# sub array {
-#     my ($self, $schema) = @_;
-#     push @{$self->{rules}}, sub {
-#         my ($value) = @_;
-#         return "Not an array" unless defined $value && ref $value eq 'ARRAY';
-#         for my $i (0..$#$value) {
-#             my $err = $schema->validate($value->[$i]);
-#             return "[$i]: $err" if defined $err;
-#         }
-#         return;
-#     };
-#     return $self;
-# }
+sub number {
+    my ($self, $opts) = @_;
+    $opts = $opts || {};
+    return Poz::Types::number->new({
+        %{$opts},
+        need_coerce => $self->{need_coerce},
+    });
+}
 
 1;
