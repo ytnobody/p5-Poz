@@ -21,7 +21,7 @@ __END__
 
 =head1 NAME
 
-Poz - It's new $module
+Poz - A simple, composable, and extensible data validation library for Perl.
 
 =head1 SYNOPSIS
 
@@ -57,6 +57,49 @@ Poz - It's new $module
 =head1 DESCRIPTION
 
 Poz is a simple, composable, and extensible data validation library for Perl. It is inspired heavily from Zod L<https://zod.dev/> in TypeScript.
+
+=head1 HOW TO CONTRIBUTE
+
+If you want to contribute to Poz, you can follow the steps below:
+
+=over 4
+
+=item 1. Prepare: Install cpanm and Minilla
+
+    $ curl -L https://cpanmin.us | perl - --sudo App::cpanminus
+    $ cpanm Minilla
+
+=item 2. Fork: Please fork the repository on GitHub.
+
+The Repository on GitHub: L<https://github.com/ytnobody/p5-Poz>
+
+=item 3. Clone: Clone the repository.
+
+    $ git clone
+
+=item 4. Branch: Create a feature branch from the main branch.
+
+    $ git checkout -b feature-branch main
+
+=item 5. Code: Write your code and tests, then build.
+
+    $ minil build
+
+=item 6. Test: Run the tests.
+
+    $ minil test
+
+=item 7. Commit: Commit your changes.
+
+    $ git commit -am "Add some feature"
+
+=item 8. Push: Push to your branch.
+    
+    $ git push origin feature-branch
+
+=item 9. Pull Request: Create a new Pull Request on GitHub.
+
+=back
 
 =head1 LICENSE
 

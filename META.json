@@ -1,5 +1,5 @@
 {
-   "abstract" : "It's new $module",
+   "abstract" : "A simple, composable, and extensible data validation library for Perl.",
    "author" : [
       "ytnobody <ytnobody@gmail.com>"
    ],
@@ -58,6 +58,17 @@
       }
    },
    "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/ytnobody/p5-Poz/issues"
+      },
+      "homepage" : "https://github.com/ytnobody/p5-Poz",
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/ytnobody/p5-Poz.git",
+         "web" : "https://github.com/ytnobody/p5-Poz"
+      }
+   },
    "version" : "0.01",
    "x_serialization_backend" : "JSON::PP version 4.06",
    "x_static_install" : 1

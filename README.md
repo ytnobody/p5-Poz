@@ -1,7 +1,7 @@
-
+[![Actions Status](https://github.com/ytnobody/p5-Poz/actions/workflows/test.yml/badge.svg)](https://github.com/ytnobody/p5-Poz/actions)
 # NAME
 
-Poz - It's new $module
+Poz - A simple, composable, and extensible data validation library for Perl.
 
 # SYNOPSIS
 
@@ -37,6 +37,45 @@ Poz - It's new $module
 # DESCRIPTION
 
 Poz is a simple, composable, and extensible data validation library for Perl. It is inspired heavily from Zod [https://zod.dev/](https://zod.dev/) in TypeScript.
+
+# HOW TO CONTRIBUTE
+
+If you want to contribute to Poz, you can follow the steps below:
+
+- 1. Prepare: Install cpanm and Minilla
+
+        $ curl -L https://cpanmin.us | perl - --sudo App::cpanminus
+        $ cpanm Minilla
+
+- 2. Fork: Please fork the repository on GitHub.
+
+    The Repository on GitHub: [https://github.com/ytnobody/p5-Poz](https://github.com/ytnobody/p5-Poz)
+
+- 3. Clone: Clone the repository.
+
+        $ git clone
+
+- 4. Branch: Create a feature branch from the main branch.
+
+        $ git checkout -b feature-branch main
+
+- 5. Code: Write your code and tests, then build.
+
+        $ minil build
+
+- 6. Test: Run the tests.
+
+        $ minil test
+
+- 7. Commit: Commit your changes.
+
+        $ git commit -am "Add some feature"
+
+- 8. Push: Push to your branch.
+
+        $ git push origin feature-branch
+
+- 9. Pull Request: Create a new Pull Request on GitHub.
 
 # LICENSE
 
