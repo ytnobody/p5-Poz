@@ -1,5 +1,5 @@
 package Poz;
-use 5.014;
+use 5.032;
 use strict;
 use warnings;
 use Poz::Builder;

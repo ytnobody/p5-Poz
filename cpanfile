@@ -1,4 +1,4 @@
-requires 'perl', '5.014';
+requires 'perl', '5.032';
 requires 'Email::Address', '1.912';
 requires 'URI', '5.07';
 requires 'Net::IPv6Addr', '1.02';

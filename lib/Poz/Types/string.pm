@@ -1,5 +1,5 @@
 package Poz::Types::string;
-use 5.014;
+use 5.032;
 use strict;
 use warnings;
 use utf8;

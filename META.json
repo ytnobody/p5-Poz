@@ -48,7 +48,7 @@
             "Email::Address" : "1.912",
             "Net::IPv6Addr" : "1.02",
             "URI" : "5.07",
-            "perl" : "5.014"
+            "perl" : "5.032"
          }
       },
       "test" : {
