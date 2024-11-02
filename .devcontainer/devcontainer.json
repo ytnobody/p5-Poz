@@ -1,0 +1,27 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/debian
+{
+	"name": "Debian",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/base:bullseye",
+	"features": {
+		"ghcr.io/devcontainers-extra/features/perl-asdf:2": {}
+	},
+	"postCreateCommand": "/home/vscode/.asdf/shims/cpanm --with-develop --installdeps -n ./",
+	"remoteEnv": {
+		"PATH": "/home/vscode/.asdf/shims:/home/vscode/.asdf/bin:/home/vscode/.asdf/installs/perl/5.40.0/bin:${containerEnv:PATH}"
+	}
+	
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+
+}

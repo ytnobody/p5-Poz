@@ -11,3 +11,7 @@ on 'test' => sub {
     requires 'Test::Exception', '0.43';
 };
 
+on 'develop' => sub {
+    requires 'Minilla', 'v3.1.25';
+};
+
