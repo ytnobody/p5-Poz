@@ -10,6 +10,13 @@
 	"postCreateCommand": "/home/vscode/.asdf/shims/cpanm --with-develop --installdeps -n ./",
 	"remoteEnv": {
 		"PATH": "/home/vscode/.asdf/shims:/home/vscode/.asdf/bin:/home/vscode/.asdf/installs/perl/5.40.0/bin:${containerEnv:PATH}"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"bscan.perlnavigator"
+			]
+		}
 	}
 	
 	// Features to add to the dev container. More info: https://containers.dev/features.
