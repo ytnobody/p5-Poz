@@ -13,6 +13,7 @@ sub new {
     my $self = bless { 
         __validator__ => $validator,
         __as__        => undef,
+        __rules__     => [],
     }, $class;
     return $self;
 }
@@ -42,6 +43,15 @@ sub safe_parse {
             error => "Invalid data: is not arrayref"
         };
     } else {
+        for my $rule (@{$self->{__rules__}}) {
+            my $err = $rule->($self, $data);
+            if (defined $err) {
+                push @errors, {
+                    key   => undef,
+                    error => $err,
+                };
+            }
+        }
         for my $i (0 .. $#{$data}) {
             my $v = $self->{__validator__};
             my $val = $data->[$i];
@@ -69,9 +79,56 @@ sub _errors_to_string {
     my $errors = shift;
     my @error_strings = ();
     for my $error (@$errors) {
-        push @error_strings, sprintf("%s on key `%s`", $error->{error}, $error->{key});
+        my $message = $error->{key} ? 
+            sprintf("%s on key `%s`", $error->{error}, $error->{key}) :
+            sprintf("%s", $error->{error});
+        push @error_strings, $message;
     }
     return join(", and ", @error_strings);
 }
 
+sub min {
+    my ($self, $min) = @_;
+    push @{$self->{__rules__}}, sub {
+        my ($self, $value) = @_;
+        return "Array is too short" if scalar(@$value) < $min;
+        return;
+    };
+    return $self;
+}
+
+sub max {
+    my ($self, $max) = @_;
+    push @{$self->{__rules__}}, sub {
+        my ($self, $value) = @_;
+        return "Array is too long" if scalar(@$value) > $max;
+        return;
+    };
+    return $self;
+}
+
+sub length {
+    my ($self, $length) = @_;
+    push @{$self->{__rules__}}, sub {
+        my ($self, $value) = @_;
+        return "Array is not of length $length" if scalar(@$value) != $length;
+        return;
+    };
+    return $self;
+}
+
+sub nonempty {
+    my ($self) = @_;
+    push @{$self->{__rules__}}, sub {
+        my ($self, $value) = @_;
+        return "Array is empty" if scalar(@$value) == 0;
+        return;
+    };
+    return $self;
+}
+
+sub element {
+    my ($self) = @_;
+    return $self->{__validator__};
+}
 1;

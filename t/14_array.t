@@ -39,5 +39,44 @@ is_deeply(
     "Invalid data"
 );
 
+my $numbersSchemaNonEmpty = z->array(z->number)->nonempty;
+is_deeply(
+    $numbersSchemaNonEmpty->parse([1, 2, 3, 4, 5]),
+    [1, 2, 3, 4, 5],
+    "Array of numbers"
+);
+throws_ok(sub {
+    $numbersSchemaNonEmpty->parse([]);
+}, qr/^Array is empty/, "Array of numbers with empty data");
+
+my $numbersSchemaMax = z->array(z->number)->max(3);
+is_deeply(
+    $numbersSchemaMax->parse([1, 2, 3]),
+    [1, 2, 3],
+    "Array of numbers"
+);
+throws_ok(sub {
+    $numbersSchemaMax->parse([1, 2, 3, 4]);
+}, qr/^Array is too long/, "Array of numbers with invalid data");
+
+my $numbersSchemaMin = z->array(z->number)->min(3);
+is_deeply(
+    $numbersSchemaMin->parse([1, 2, 3]),
+    [1, 2, 3],
+    "Array of numbers"
+);
+throws_ok(sub {
+    $numbersSchemaMin->parse([1, 2]),
+}, qr/^Array is too short/, "Array of numbers with invalid data");
+
+my $numbersSchemaLength = z->array(z->number)->length(3);
+is_deeply(
+    $numbersSchemaLength->parse([1, 2, 3]),
+    [1, 2, 3],
+    "Array of numbers"
+);
+throws_ok(sub {
+    $numbersSchemaLength->parse([1, 2, 3, 4]);
+}, qr/^Array is not of length 3/, "Array of numbers with invalid data");
 
 done_testing;
