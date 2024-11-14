@@ -48,12 +48,14 @@
             "DateTime::Format::Strptime" : "1.79",
             "Email::Address" : "1.912",
             "Net::IPv6Addr" : "1.02",
+            "Try::Tiny" : "0.32",
             "URI" : "5.07",
             "perl" : "5.032"
          }
       },
       "test" : {
          "requires" : {
+            "Data::UUID" : "1.227",
             "Test::Exception" : "0.43",
             "Test::More" : "0.98"
          }

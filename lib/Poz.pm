@@ -4,12 +4,19 @@ use strict;
 use warnings;
 use Poz::Builder;
 use Exporter 'import';
+use Carp;
 
 our $VERSION = "0.01";
 
 our @EXPORT_OK = qw/z/;
 our %EXPORT_TAGS = (all => \@EXPORT_OK);
 
+$Carp::Internal{'Poz'}++;
+$Carp::Internal{'Poz::Builder'}++;
+$Carp::Internal{'Poz::Types::base'}++;
+$Carp::Internal{'Poz::Types::string'}++;
+$Carp::Internal{'Poz::Types::object'}++;
+$Carp::Internal{'Poz::Types::number'}++;
 sub z {
     return Poz::Builder->new;
 }
@@ -29,30 +36,28 @@ Poz - A simple, composable, and extensible data validation library for Perl.
     use Data::UUID;
     use Time::Piece;
     my $bookSchema = z->object({
-        id         => z->string->default(sub { Data::UUID->new->create_str }),   
+        id         => z->string->uuid->default(sub { Data::UUID->new->create_str }),   
         title      => z->string,
         author     => z->string->default("Anonymous"),
         published  => z->date,
-        created_at => z->date->default(sub { Time::Piece::localtime() }),
-        updated_at => z->date->default(sub { Time::Piece::localtime() }),
-    });
+        created_at => z->date->default(sub { Time::Piece::localtime()->strftime('%Y-%m-%d') }),
+        updated_at => z->date->default(sub { Time::Piece::localtime()->strftime('%Y-%m-%d') }),
+    })->as("My::Book");
 
     my $book = $bookSchema->parse({
         title     => "Spidering Hacks",
         author    => "Kevin Hemenway",
         published => "2003-10-01",
     }) or die "Invalid book data";
-    $book->isa("Book"); # true
+    $book->isa("My::Book"); # true
 
     my ($otherBook, $err) = $bookSchema->safe_parse({
         title => "Eric Sink on the Business of Software",
         author => "Eric Sink",
         published => "2006-0i-01",
-        created_at => "2024-10-10 01:23:45+09:00",
-        updated_at => "2024-10-10 01:23:45+09:00",
     });
     $otherBook; # undef
-    $err; # "Invalid date format: 2006-0i-01"
+    $err; # [{key => "", error => "Not a date"}]
 
 =head1 DESCRIPTION
 

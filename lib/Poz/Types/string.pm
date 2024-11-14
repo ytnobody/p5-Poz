@@ -114,7 +114,7 @@ sub uuid {
     $opts->{message} //= "Not an UUID";
     push @{$self->{rules}}, sub {
         my ($self, $value) = @_;
-        Carp::croak($opts->{message}) unless $value =~ /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+        Carp::croak($opts->{message}) unless lc($value) =~ /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
         return;
     };
     return $self;
