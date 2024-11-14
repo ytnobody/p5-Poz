@@ -15,8 +15,10 @@ $Carp::Internal{'Poz'}++;
 $Carp::Internal{'Poz::Builder'}++;
 $Carp::Internal{'Poz::Types::base'}++;
 $Carp::Internal{'Poz::Types::string'}++;
-$Carp::Internal{'Poz::Types::object'}++;
 $Carp::Internal{'Poz::Types::number'}++;
+$Carp::Internal{'Poz::Types::object'}++;
+$Carp::Internal{'Poz::Types::array'}++;
+
 sub z {
     return Poz::Builder->new;
 }

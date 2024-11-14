@@ -1,4 +1,4 @@
-package Poz::Types::object;
+package Poz::Types::array;
 use 5.032;
 use strict;
 use warnings;
@@ -6,17 +6,14 @@ use Carp ();
 use Try::Tiny;
 
 sub new {
-    my ($class, $struct) = @_;
-    my $self = bless { 
-        __struct__ => {},
-        __as__     => undef,
-    }, $class;
-    for my $key (keys %$struct) {
-        my $v = $struct->{$key};
-        if ($v->isa('Poz::Types::base')) {
-            $self->{__struct__}{$key} = $v;
-        }
+    my ($class, $validator) = @_;
+    if (!$validator->isa('Poz::Types::base')) {
+        Carp::croak("Invalid validator: is not a subclass of Poz::Types");
     }
+    my $self = bless { 
+        __validator__ => $validator,
+        __as__        => undef,
+    }, $class;
     return $self;
 }
 
@@ -39,22 +36,22 @@ sub parse {
 sub safe_parse {
     my ($self, $data) = @_;
     my @errors = ();
-    if (ref($data) ne 'HASH') {
+    if (ref($data) ne 'ARRAY') {
         push @errors, {
             key   => undef,
-            error => "Invalid data: is not hashref"
+            error => "Invalid data: is not arrayref"
         };
     } else {
-        for my $key (sort keys %{$self->{__struct__}}) {
-            my $v = $self->{__struct__}{$key};
-            my $val = $data->{$key};
+        for my $i (0 .. $#{$data}) {
+            my $v = $self->{__validator__};
+            my $val = $data->[$i];
             try {
                 $v->parse($val);
             } catch {
                 my $error_message = $_;
                 $error_message =~ s/ at .+ line [0-9]+\.\n//;
                 push @errors, {
-                    key   => $key,
+                    key   => $i,
                     error => $error_message,
                 };
             }
@@ -64,7 +61,7 @@ sub safe_parse {
         return (undef, [@errors])
     }
     my $classname = $self->{__as__};
-    my $valid = $classname ? bless {%$data}, $classname : {%$data};
+    my $valid = $classname ? bless [@$data], $classname : [@$data];
     return ($valid, undef);
 }
 

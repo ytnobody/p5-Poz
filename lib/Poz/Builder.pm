@@ -5,6 +5,7 @@ use warnings;
 use Poz::Types::string;
 use Poz::Types::number;
 use Poz::Types::object;
+use Poz::Types::array;
 
 sub new {
     my ($class) = @_;
@@ -46,6 +47,11 @@ sub number {
 sub object {
     my ($self, $opts) = @_;
     return Poz::Types::object->new({%$opts});
+}
+
+sub array {
+    my ($self, $validator) = @_;
+    return Poz::Types::array->new($validator);
 }
 
 1;
