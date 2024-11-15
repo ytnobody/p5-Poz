@@ -7,7 +7,7 @@ use Try::Tiny;
 
 sub new {
     my ($class, $validator) = @_;
-    if (!$validator->isa('Poz::Types::base')) {
+    if (!$validator->isa('Poz::Types')) {
         Carp::croak("Invalid validator: is not a subclass of Poz::Types");
     }
     my $self = bless { 

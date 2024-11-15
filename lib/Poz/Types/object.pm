@@ -13,7 +13,7 @@ sub new {
     }, $class;
     for my $key (keys %$struct) {
         my $v = $struct->{$key};
-        if ($v->isa('Poz::Types::base')) {
+        if ($v->isa('Poz::Types')) {
             $self->{__struct__}{$key} = $v;
         }
     }

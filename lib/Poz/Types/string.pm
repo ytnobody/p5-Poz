@@ -3,7 +3,7 @@ use 5.032;
 use strict;
 use warnings;
 use utf8;
-use parent 'Poz::Types::base';
+use parent 'Poz::Types::scalar';
 use Carp ();
 use Email::Address ();
 use URI::URL ();

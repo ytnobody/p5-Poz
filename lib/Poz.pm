@@ -13,7 +13,8 @@ our %EXPORT_TAGS = (all => \@EXPORT_OK);
 
 $Carp::Internal{'Poz'}++;
 $Carp::Internal{'Poz::Builder'}++;
-$Carp::Internal{'Poz::Types::base'}++;
+$Carp::Internal{'Poz::Types'}++;
+$Carp::Internal{'Poz::Types::scalar'}++;
 $Carp::Internal{'Poz::Types::string'}++;
 $Carp::Internal{'Poz::Types::number'}++;
 $Carp::Internal{'Poz::Types::object'}++;

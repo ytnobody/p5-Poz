@@ -2,7 +2,7 @@ package Poz::Types::number;
 use 5.032;
 use strict;
 use warnings;
-use parent 'Poz::Types::base';
+use parent 'Poz::Types::scalar';
 use Carp ();
 
 sub new {
