@@ -132,3 +132,85 @@ sub element {
     return $self->{__validator__};
 }
 1;
+
+=head1 NAME
+
+Poz::Types::array - Array type validation for Poz::Types
+
+=head1 SYNOPSIS
+
+    use Poz qw/z/;
+
+    my $array_validator = z->array(z->number);
+
+    $array_validator->min(1)->max(5)->nonempty();
+
+    my $data = [1, 2, 3];
+    my $validated_data = $array_validator->parse($data);
+
+=head1 DESCRIPTION
+
+Poz::Types::array provides a way to validate arrays with various rules. It is designed to work with the Poz.
+
+=head1 METHODS
+
+=head2 as
+
+    $array_validator->as('ArrayClass');
+
+Sets the class name to bless the validated array into.
+
+=head2 parse
+
+    my $validated_data = $array_validator->parse($data);
+
+Parses and validates the data. Throws an exception if validation fails.
+
+=head2 safe_parse
+
+    my ($validated_data, $errors) = $array_validator->safe_parse($data);
+
+Parses and validates the data. Returns the validated data and any errors.
+
+=head2 min
+
+    $array_validator->min($min_length);
+
+Sets a minimum length for the array.
+
+=head2 max
+
+    $array_validator->max($max_length);
+
+Sets a maximum length for the array.
+
+=head2 length
+
+    $array_validator->length($exact_length);
+
+Sets an exact length for the array.
+
+=head2 nonempty
+
+    $array_validator->nonempty();
+
+Ensures the array is not empty.
+
+=head2 element
+
+    my $element_validator = $array_validator->element();
+
+Returns the element validator.
+
+=head1 LICENSE
+
+Copyright (C) ytnobody.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=head1 AUTHOR
+
+ytnobody E<lt>ytnobody@gmail.comE<gt>
+
+=cut

@@ -78,3 +78,55 @@ sub _errors_to_string {
 }
 
 1;
+
+=head1 NAME
+
+Poz::Types::object - A module for handling structured data with type validation
+
+=head1 SYNOPSIS
+
+    use Poz qw/z/;
+
+    my $object = z->object({
+        name => z->string,
+        age => z->number,
+    })->as('Some::Class');
+
+    my $parsed_data = $object->parse($data);
+
+=head1 DESCRIPTION
+
+Poz::Types::object is a module for handling structured data with type validation. It allows you to define a structure with specific types and validate data against this structure.
+
+=head1 METHODS
+
+=head2 as
+
+    $object->as($typename);
+
+Sets the class name to bless the parsed data into. The C<$typename> parameter should be a string representing the class name.
+
+=head2 parse
+
+    my $parsed_data = $object->parse($data);
+
+Parses and validates the given data against the structure. If the data is valid, it returns the parsed data. If the data is invalid, it throws an exception with the validation errors.
+
+=head2 safe_parse
+
+    my ($valid, $errors) = $object->safe_parse($data);
+
+Parses and validates the given data against the structure. If the data is valid, it returns the parsed data and undef for errors. If the data is invalid, it returns undef for valid data and an array reference of errors.
+
+=head1 LICENSE
+
+Copyright (C) ytnobody.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=head1 AUTHOR
+
+ytnobody E<lt>ytnobody@gmail.comE<gt>
+
+=cut
