@@ -6,6 +6,7 @@ use Poz::Types::string;
 use Poz::Types::number;
 use Poz::Types::object;
 use Poz::Types::array;
+use Poz::Types::enum;
 
 sub new {
     my ($class) = @_;
@@ -52,6 +53,11 @@ sub object {
 sub array {
     my ($self, $validator) = @_;
     return Poz::Types::array->new($validator);
+}
+
+sub enum {
+    my ($self, $opts) = @_;
+    return Poz::Types::enum->new($opts);
 }
 
 1;
