@@ -97,6 +97,14 @@ By default, it throws a "Not implemented" error.
 Parses the given value according to the defined rules and transformations.
 Returns the transformed value or an error if validation fails.
 
+=head2 safe_parse
+
+    my ($result, $error) = $type->safe_parse($value);
+
+Parses the given value and returns the transformed value.
+If succeeds, returns a tuple of the transformed value and undef.
+If fails, returns a tuple of undef and an error message.
+
 =head1 LICENSE
 
 Copyright (C) ytnobody.
