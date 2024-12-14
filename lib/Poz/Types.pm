@@ -60,17 +60,17 @@ Poz::Types - A module for handling type validation and transformation
 =head1 SYNOPSIS
 
     use Poz::Types;
-    
+
     my $type = Poz::Types->new({
         required_error => 'This field is required',
         invalid_type_error => 'Invalid type provided',
     });
-    
+
     my $result = $type->parse($value);
 
 =head1 DESCRIPTION
 
-Poz::Types is a module designed to handle type validation and transformation. 
+Poz::Types is a module designed to handle type validation and transformation.
 It provides a flexible way to define rules and transformations for different types.
 
 =head1 METHODS
@@ -87,14 +87,14 @@ Creates a new Poz::Types object. The optional hash reference can contain the fol
 
     $type->rule();
 
-This method should be overridden in subclasses to provide specific validation rules. 
+This method should be overridden in subclasses to provide specific validation rules.
 By default, it throws a "Not implemented" error.
 
 =head2 parse
 
     my $result = $type->parse($value);
 
-Parses the given value according to the defined rules and transformations. 
+Parses the given value according to the defined rules and transformations.
 Returns the transformed value or an error if validation fails.
 
 =head1 LICENSE

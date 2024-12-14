@@ -162,18 +162,18 @@ Poz::Types::number - A module for number type validation and coercion
 =head1 SYNOPSIS
 
     use Poz qw/z/;
-    
+
     my $number = z->number;
-    
+
     # Validate a number
     $number->rule(42); # No error
-    
+
     # Coerce a value to a number
     my $coerced_value = $number->coerce("42.5");
-    
+
     # Add validation rules
     $number->gt(10)->lt(100);
-    
+
     # Validate with custom rules
     $number->rule(50); # No error
 

@@ -82,7 +82,7 @@ sub _errors_to_string {
     my $errors = shift;
     my @error_strings = ();
     for my $error (@$errors) {
-        my $message = $error->{key} ? 
+        my $message = $error->{key} ?
             sprintf("%s on key `%s`", $error->{error}, $error->{key}) :
             sprintf("%s", $error->{error});
         push @error_strings, $message;
