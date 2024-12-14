@@ -1,7 +1,7 @@
 package Poz::Types;
 use strict;
 use warnings;
-use Carp;
+use Carp ();
 
 sub new {
     my ($class, $opts) = @_;
@@ -23,6 +23,15 @@ sub rule {
 }
 
 sub parse {
+    my $self = shift;
+    my ($ret, $err) = $self->safe_parse(@_);
+    Carp::croak $err if defined $err;
+    $ret;
+}
+
+sub safe_parse {
+    Carp::croak "Must handle error" unless wantarray;
+
     my ($self, $value) = @_;
     if (length($self->{transform}) > 0) {
         for my $transformer (@{$self->{transform}}) {
@@ -31,15 +40,15 @@ sub parse {
     }
     for my $rule (@{$self->{rules}}) {
         my $err = $rule->($self, $value);
-        if (defined $err && ref($err) eq "Poz::Result::ShortCircuit") {
+        if ( (ref($err)||'') eq 'Poz::Result::ShortCircuit') {
             return;
         }
-        return $err if defined $err;
+        return (undef, $err) if defined $err;
     }
     if ($self->{need_coerce}) {
         $value = $self->coerce($value);
     }
-    return $value;
+    return ($value, undef);
 }
 
 1;
