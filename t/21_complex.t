@@ -96,7 +96,6 @@ is_deeply($result->{staff}, bless({
   id => 1,
   name => 'Taro Yamada',
 }, 'BurgerShop::Staff'), 'staff is correct');
-diag explain($result);
 like($result->{ordered_at}, qr/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/, 'ordered_at is correct');
 
 done_testing;
