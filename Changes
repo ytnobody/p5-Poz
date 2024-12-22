@@ -2,6 +2,10 @@ Revision history for Perl extension Poz
 
 {{$NEXT}}
 
+0.03 2024-12-22T01:34:04Z
+
+    - bugfix: Fixed a bug where the default values of the object were not being assigned. 
+
 0.02 2024-12-15T01:21:25Z
 
     - Added safe_parse to all Poz types (kfly8)
