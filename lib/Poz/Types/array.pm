@@ -16,6 +16,7 @@ sub new {
         __as__        => undef,
         __rules__     => [],
         __optional__  => 0,
+        __default__   => undef,
     }, $class;
     return $self;
 }
@@ -41,6 +42,9 @@ sub safe_parse {
 
     my ($self, $data) = @_;
     my @errors = ();
+    if (defined $self->{__default__} && !defined $data) {
+        $data = $self->{__default__};
+    }
     if (!defined $data) {
         if ($self->{__optional__}) {
             return (undef, undef);
@@ -148,6 +152,12 @@ sub element {
 sub optional {
     my ($self) = @_;
     $self->{__optional__} = 1;
+    return $self;
+}
+
+sub default {
+    my ($self, $default) = @_;
+    $self->{__default__} = $default;
     return $self;
 }
 
