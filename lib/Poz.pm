@@ -19,6 +19,8 @@ $Carp::Internal{'Poz::Types::string'}++;
 $Carp::Internal{'Poz::Types::number'}++;
 $Carp::Internal{'Poz::Types::object'}++;
 $Carp::Internal{'Poz::Types::array'}++;
+$Carp::Internal{'Poz::Types::enum'}++;
+$Carp::Internal{'Poz::Types::union'}++;
 
 sub z {
     return Poz::Builder->new;
