@@ -62,6 +62,14 @@ Poz - A simple, composable, and extensible data validation library for Perl.
     $otherBook; # undef
     $err; # [{key => "", error => "Not a date"}]
 
+    my $bookOrNumberSchema = z->union($bookSchema, z->number);
+    my $bookOrNumber = $bookOrNumberSchema->parse(123);
+    $bookOrNumber = $bookOrNumberSchema->parse({
+        title => "Perl Best Practices",
+        date => "2005-07-01",
+        author => "Damian Conway",
+    }); 
+    
 =head1 DESCRIPTION
 
 Poz is a simple, composable, and extensible data validation library for Perl. It is inspired heavily from Zod L<https://zod.dev/> in TypeScript.
@@ -126,6 +134,12 @@ Creates a new array schema object.
 
 Creates a new enum schema object.
 
+=head2 z->union
+
+    my $schema = z->union(@schemas);
+
+Creates a new union schema object.
+
 =head1 SEE ALSO
 
 L<Zod|https://zod.dev/>
@@ -136,6 +150,7 @@ L<Poz::Types::number>
 L<Poz::Types::object>
 L<Poz::Types::array>
 L<Poz::Types::enum>
+L<Poz::Types::union>
 
 =head1 HOW TO CONTRIBUTE
 
