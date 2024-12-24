@@ -143,6 +143,12 @@ Creates a new array type with the given validator.
 
 Creates a new enum type with the given options.
 
+=head2 union
+
+    my $union_type = $builder->union(@validators);
+
+Creates a new union type with the given validators.
+
 =head1 LICENSE
 
 Copyright (C) ytnobody.
