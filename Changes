@@ -2,6 +2,10 @@ Revision history for Perl extension Poz
 
 {{$NEXT}}
 
+0.06 2024-12-24T08:24:45Z
+
+    - add union value feature
+
 0.05 2024-12-23T08:26:58Z
 
     - supports default of array
