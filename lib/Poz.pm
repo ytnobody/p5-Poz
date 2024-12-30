@@ -6,7 +6,7 @@ use Poz::Builder;
 use Exporter 'import';
 use Carp;
 
-our $VERSION = "0.08";
+our $VERSION = "0.09";
 
 our @EXPORT_OK = qw/z/;
 our %EXPORT_TAGS = (all => \@EXPORT_OK);
