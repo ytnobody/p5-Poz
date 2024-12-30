@@ -15,6 +15,7 @@ $Carp::Internal{'Poz'}++;
 $Carp::Internal{'Poz::Builder'}++;
 $Carp::Internal{'Poz::Types'}++;
 $Carp::Internal{'Poz::Types::scalar'}++;
+$Carp::Internal{'Poz::Types::null'}++;
 $Carp::Internal{'Poz::Types::string'}++;
 $Carp::Internal{'Poz::Types::number'}++;
 $Carp::Internal{'Poz::Types::object'}++;
@@ -147,6 +148,7 @@ Creates a new union schema object.
 L<Zod|https://zod.dev/>
 L<Poz::Builder>
 L<Poz::Types>
+L<Poz::Types::null>
 L<Poz::Types::string>
 L<Poz::Types::number>
 L<Poz::Types::object>
