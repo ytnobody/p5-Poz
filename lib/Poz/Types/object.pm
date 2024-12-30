@@ -45,7 +45,7 @@ sub safe_parse {
     my $valid = {};
     if (ref($data) ne 'HASH') {
         push @errors, {
-            key   => undef,
+            key   => '(root)',
             error => "Invalid data: is not hashref"
         };
     } else {

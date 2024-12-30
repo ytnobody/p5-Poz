@@ -74,4 +74,12 @@ subtest 'object contains undefined value, schema has optional string array' => s
     is($errors, undef);
 };
 
+subtest 'undefined value passes to standard object schema' => sub {
+    my $object = z->object({
+        name => z->string,
+    });
+    is_deeply($object->parse({name => 'tofu'}), {name => 'tofu'});
+    throws_ok(sub { $object->parse() }, qr/^Invalid data: is not hashref on key `\(root\)`/, 'Invalid data: is not hashref');
+};
+
 done_testing;
