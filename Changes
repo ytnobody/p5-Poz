@@ -2,6 +2,10 @@ Revision history for Perl extension Poz
 
 {{$NEXT}}
 
+0.10 2024-12-30T13:47:49Z
+
+    - bugfix: undefined value warning when undefined value passed to object schema
+
 0.09 2024-12-30T01:54:18Z
 
     - feature: add null feature
