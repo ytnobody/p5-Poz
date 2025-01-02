@@ -103,4 +103,7 @@ is_deeply($result->{staff}, bless({
 }, 'BurgerShop::Staff'), 'staff is correct');
 like($result->{ordered_at}, qr/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/, 'ordered_at is correct');
 
+my $is_burger_shop_receipt_schema = z->is('BurgerShop::Receipt');
+is($is_burger_shop_receipt_schema->parse($result), $result, 'BurgerShop::Receipt');
+
 done_testing;
