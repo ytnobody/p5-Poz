@@ -40,4 +40,7 @@ throws_ok(sub {
     $isSchemaOptionalDefault->parse($other_obj);
 }, qr/^Not a Some::Class/, "Not a Some::Class");
 
+my $schemaSchema = z->is('Poz::Types');
+is($schemaSchema->parse($isSchema), $isSchema, "Poz::Types");
+
 done_testing;

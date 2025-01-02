@@ -18,7 +18,7 @@ sub new {
 sub rule {
     my ($self, $value) = @_;
     return $self->{required_error} unless defined $value;
-    return $self->{invalid_type_error} unless ref($value) eq $self->{is};
+    return $self->{invalid_type_error} unless $value->isa($self->{is});
     return;
 }
 
