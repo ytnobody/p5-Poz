@@ -2,6 +2,10 @@ Revision history for Perl extension Poz
 
 {{$NEXT}}
 
+0.13 2025-01-02T16:13:50Z
+
+    - feature: implement Poz::Types::is
+
 0.12 2025-01-02T14:43:58Z
 
     - bugfix: nested instances is not blessed
