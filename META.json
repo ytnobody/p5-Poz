@@ -66,14 +66,14 @@
       "bugtracker" : {
          "web" : "https://github.com/ytnobody/p5-Poz/issues"
       },
-      "homepage" : "https://ytnobody.github.io/poz/",
+      "homepage" : "https://github.com/ytnobody/p5-Poz",
       "repository" : {
          "type" : "git",
          "url" : "https://github.com/ytnobody/p5-Poz.git",
          "web" : "https://github.com/ytnobody/p5-Poz"
       }
    },
-   "version" : "0.14",
+   "version" : "0.15",
    "x_contributors" : [
       "kobaken <kentafly88@gmail.com>"
    ],
