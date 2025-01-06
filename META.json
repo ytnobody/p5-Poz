@@ -66,7 +66,7 @@
       "bugtracker" : {
          "web" : "https://github.com/ytnobody/p5-Poz/issues"
       },
-      "homepage" : "https://github.com/ytnobody/p5-Poz",
+      "homepage" : "https://ytnobody.github.io/poz/",
       "repository" : {
          "type" : "git",
          "url" : "https://github.com/ytnobody/p5-Poz.git",
